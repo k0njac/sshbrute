@@ -48,6 +48,7 @@ func HandleCraklist() {
 	fmt.Println("[+]get password.txt done")
 	wg1 := golimit.NewGoLimit(300)
 	for i, iplist := range iplists {
+		iplist = strings.TrimSpace(iplist)
 		if !strings.Contains(iplist, ":") {
 			iplists[i] = iplist + ":22"
 		}
@@ -67,6 +68,8 @@ func HandleCraklist() {
 	for _, pass := range passwd {
 		for _, user := range username {
 			for _, iplist := range Checkiplists {
+				pass = strings.TrimSpace(pass)
+				user = strings.TrimSpace(user)
 				cracklist = append(cracklist, Sshcrack{
 					Ip:   iplist,
 					User: user,
