@@ -13,8 +13,14 @@ ip.txt 填写ip 或 ip:端口
 
 user.txt 添加要爆破的用户名
 ```
-
+root
+admin
 ```
 
 password.txt 则填写要爆破的字典
-plugin/getdict.go:86行 可以替换你默认登录以后要执行的命令 如果不想执行 则为空
+
+plugin/getdict.go:89行 
+```
+            CheckSsh(value.User, value.Pass, value.Ip, "w") // 可以替换成whoami
+```
+可以替换你默认登录以后要执行的命令 如果不想执行任何命令 则为空
