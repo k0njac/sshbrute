@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/schollz/progressbar/v3"
 	"github.com/zh-five/golimit"
 )
 
@@ -59,7 +60,7 @@ func HandleCraklist() {
 		}(iplists[i])
 	}
 	wg1.WaitZero()
-	fmt.Printf("%v ip is alive", len(Checkiplists))
+	fmt.Printf("%v ip is alive\n", len(Checkiplists))
 	fmt.Println("[+]handle ip.txt done")
 
 	/*
@@ -78,7 +79,8 @@ func HandleCraklist() {
 			}
 		}
 	}
-	fmt.Println("[+]handle cracklist done")
+	fmt.Println("[+]handle dictlist done")
+	bar := progressbar.Default(int64(len(cracklist)), "爆破中")
 	/*
 		开始爆破
 	*/
@@ -86,6 +88,7 @@ func HandleCraklist() {
 	for _, value := range cracklist {
 		wg.Add()
 		go func(value Sshcrack) {
+			bar.Add(1)
 			CheckSsh(value.User, value.Pass, value.Ip, "w") // 可以替换成whoami
 			wg.Done()
 		}(value)
